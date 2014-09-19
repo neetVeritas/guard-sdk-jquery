@@ -1,0 +1,144 @@
+<!DOCTYPE HTML><!-- left here, update for app -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guard - Application</title>
+    <script src="/src/includes/jquery.min.js"></script><!-- reference jquery source here -->
+    <script src="/src/includes/utility.js"></script><!-- reference utility source here -->
+    <script src="/src/modules/app.js"></script><!-- reference user module source here -->
+    <style>
+        html{ margin:0; padding:0; }
+        body{
+            background-color:#f5f5f5;
+        }
+        .wrapper{
+            display:block;
+        }
+        .wrapper.main{
+            margin:3em auto 3em auto;
+            padding:15px;
+            width:500px;
+            background-color:#fff;
+            border:1px solid #d3d3d3;
+            border-radius:4px;
+        }
+        .wrapper.authenticate{
+            margin:1em auto 1em auto;
+            padding:0 10px 0 10px;
+            width:250px;
+            background-color:#f1f1f1;
+            border:1px solid #d3d3d3;
+            border-radius:2px;
+        }
+        .input.section{
+            margin-right:auto;
+        }
+        label{
+            cursor:pointer;
+            font-size:16px;
+            font-weight:bold;
+            font-style:italic;
+            color:#696969;
+        }
+        input.textbox {
+            cursor: default;
+            padding: 10px;
+            height: 15px;
+            width: 225px;
+            font-size: 16px;
+            color: #696969;
+            border: 1px solid #d3d3d3;
+        }
+        input.textbox#identifier {
+            text-align:center;
+        }
+        input.textbox:focus {
+            cursor:text;
+            color:#000;
+            border:1px solid #696969;
+        }
+        input.button {
+            cursor:pointer;
+            padding:5px;
+            width:100%;
+            font-size:16px;
+            font-weight:bold;
+            color:#fff;
+            background-color:#61AE50;
+            border:none;
+            border-bottom:3px solid #529C41;
+            border-radius:2px;
+        }
+        input.button.disabled{
+            background-color:#3B3D3E;
+            border-bottom:3px solid #3B3D3E;
+        }
+        input.button:hover {
+            background-color:#3B3D3E;
+            border-bottom:3px solid #3B3D3E;
+        }
+        table {
+            cursor:default;
+            width:500px;
+            max-width:500px;
+            font-size:16px;
+            text-align:center;
+            color:#3b3d3e;
+            background-color:#fff;
+            border-collapse:collapse;
+        }
+        tr, th, td {
+            padding:10px;
+            border:1px solid #3b3d3e;
+        }
+        th {
+            font-weight:bold;
+            text-transform:uppercase;
+            color:#fff;
+            background-color:#3b3d3e;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper main">
+        <div class="wrapper credentials">
+            <form class="wrapper authenticate">
+                <p class="input section">
+                    <label for="identifier">
+                    Identifier<br />
+                    <input id="identifier" class="input textbox" type="text" name="identifier" />
+                    </label>
+                </p>
+                <p class="input section">
+                    <input class="input button" id="identify" type="submit" onclick="return false;" value="Identify" />
+                </p>
+            </form>
+        </div>
+        <div class="wrapper data" style="display:none;">
+            <table>
+                <tbody>
+                    <tr id="headers">
+                        <!-- headers -->
+                    </tr>
+                    <tr id="cells">
+                        <!-- cells -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script>
+            $('input.button#identify').click(function(){
+                $application = Module.App.identify( $('input.textbox#identifier').val() );
+                if( $application ) {
+                    $('div.wrapper.credentials').hide();
+                    for($field in $application) {
+                        $('tr#headers').html( '<th>' + $field + '</th>' );
+                        $('tr#cells').html( '<td>' + $application[$field] + '</td>' );
+                    }
+                    $('div.wrapper.data').show();
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
